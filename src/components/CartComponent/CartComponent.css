@@ -1,0 +1,31 @@
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .cart-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .cart-summary {
+    text-align: right;
+    margin-top: 1rem;
+  }
+  
+  .confirmation-popup {
+    background-color: #d4edda;
+    padding: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+  }
+  
