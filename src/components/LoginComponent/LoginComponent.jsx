@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react'
+import './LoginComponent.css'
 import  { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { HeaderComponent } from '../HeaderComponent/HeaderComponent';
@@ -11,10 +12,6 @@ export const LoginComponent = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  let header = HeaderComponent;
-  if(header){
-    <HeaderComponent/>
-  }
     try {
       const res = await axios.post("https://fakestoreapi.com/auth/login", {
         username,
@@ -30,9 +27,9 @@ export const LoginComponent = () => {
     <div className="login-container">
     <form onSubmit={handleLogin}>
       <h2>Login</h2>
-     <div> <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required /></div>
-    <div>  <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required /></div>
-     <div><button type="submit" >Login</button></div> 
+      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
+      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
+      <button type="submit" >Login</button>
     </form>
   </div>
   )

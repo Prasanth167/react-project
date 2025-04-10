@@ -6,9 +6,11 @@
 
 .image-container {
   flex-basis: 40%;
+  height: 300px;
 }
 img {
-  width: 50%;
+  width: 100%;
+  height: 100%;
 }
 
 .product-info {
@@ -16,6 +18,13 @@ img {
   text-align: start;
 }
 
-h1{
+.product-info h1{
   text-align: start;
+  font-size: 22px;
+}
+
+.product-detail-container {
+  margin: 24px auto;
+  max-width: 1200px;
+  padding: 10px;
 }

@@ -30,9 +30,6 @@ export const ProductDetailsComponent = () => {
   };
   return (
     <div className="product-detail-container">
-      <div>
-        <input type='check'/>Mens
-      </div>
     {
       product &&
     <div className="product-detail">

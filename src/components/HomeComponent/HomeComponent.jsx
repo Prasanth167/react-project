@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 export const HomeComponent = () => {
   const [products, setProducts] = useState([]);
+  const [categories , setCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchProducts = async () => {
@@ -12,6 +15,8 @@ export const HomeComponent = () => {
         const response = await fetch('https://fakestoreapi.com/products');
         const data = await response.json();
         setProducts(data);
+        const categoriesData = [...new Set(data.map((res)=>res.category))]
+        setCategories(categoriesData)
       } catch (err) {   
         console.log('products data empty ')
       }  
@@ -19,13 +24,34 @@ export const HomeComponent = () => {
     fetchProducts();
   }, []);
 
+  const handleSelectChange = async(e) => {
+      setSelectedCategory(e.target.value);
+      try {
+        const res = await fetch(`https://fakestoreapi.com/products/category/${e.target.value}`);
+        const data = await res.json();
+        setProducts(data)     
+      } catch (err) {
+        alert("Invalid login!");
+      }
+  };
+
   return (
     <div className="container">
-    <h1>Our Products</h1>
+      <div className="filter">
+        <p>Filter By Caterogy</p>
+        <select value={selectedCategory} onChange={handleSelectChange}>
+          <option disabled="true" value="">Select Category</option>
+          {
+            categories.map((category)=>(
+              <option  key={category} value={category}>{category}</option>
+            ))
+          }
+        </select>
+      </div>
     <div className="product-list">
       {products.map((product) => (
         <div key={product.id} className="product-card">
-          <div>
+          <div className='poduct-image'>
             <img src={product.image} alt={product.title} />
           </div>
           <div>
