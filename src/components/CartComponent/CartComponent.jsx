@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import './CartComponent.css'
+import React, { useEffect, useState } from 'react';
+import './CartComponent.css';
 import { useNavigate } from 'react-router-dom';
-
 
 export const CartComponent = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -33,98 +32,132 @@ export const CartComponent = () => {
       .reduce((total, item) => total + item.price * item.quantity, 0)
       .toFixed(2);
 
+  const calculateDiscount = (originalPrice, discountedPrice) => {
+    return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
+  };
+
   const handleCheckout = () => {
     setShowConfirmation(true);
     localStorage.removeItem("cart");
     setCartItems([]);
     setTimeout(() => {
       setShowConfirmation(false);
-    }, 4000);
+      navigate("/cart");
+    }, 3000);
   };
 
   if (cartItems.length === 0 && !showConfirmation) {
     return (
-      <div className="empty-cart">
+      <div >
         <h2>Your cart is empty</h2>
-        <button onClick={() => navigate("/")}>Continue Shopping</button>
+        <button  onClick={() => navigate("/")}>
+          Continue Shopping
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="cart-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        &larr; Back
-      </button>
+    <div >
+      <div>
+        <h1>Your Shopping Cart ({cartItems.length})</h1>
+      </div>
 
-      <h1>Your Shopping Cart</h1>
-
-      <table className="cart-table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map(item => (
-            <tr key={item.id}>
-              <td>
-                <img src={item.image} alt={item.title} height="60" />
-              </td>
-              <td>{item.title}</td>
-              <td>${item.price}</td>
-              <td>
-                <button
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  disabled={item.quantity <= 1}
-                >
-                  -
-                </button>
-                <span style={{ margin: "0 10px" }}>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>
-                  +
-                </button>
-              </td>
-              <td>${(item.price * item.quantity).toFixed(2)}</td>
-              <td>
-                <button
-                  className="remove-item"
-                  onClick={() => removeItem(item.id)}
-                >
-                  Remove
-                </button>
-              </td>
+     <div className="products-table">
+     <div className='products'>
+        <table className='table' >
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              {/* <th>Total</th> */}
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cartItems.map(item => (
+              <tr key={item.id} >
+                <td >
+                  <div >
+                    <img src={item.image} alt={item.title} />
+                  </div>
 
-      <div className="cart-summary">
-        <h2>Order Summary</h2>
-        <div className="summary-row">
-          <span>Total:</span>
-          <span>${calculateTotal()}</span>
+                  <div >
+                    <h3>{item.title}</h3>
+                    {item.variant && <p>{item.variant}</p>}
+                    <p >Seller: {item.seller || "Generic Seller"}</p>
+                  </div>
+                </td>
+                <td >
+                  <div >
+                    <span >₹{item.discountedPrice?.toLocaleString() || item.price.toLocaleString()}</span>
+                    {item.originalPrice && (
+                      <>
+                        <span >₹{item.originalPrice.toLocaleString()}</span>
+                        <span>
+                          {calculateDiscount(item.originalPrice, item.discountedPrice || item.price)}% off
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </td>
+                <td >
+                  <div className='quantity-button'>
+                 <div>
+                 <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                 </div>
+                  <span>{item.quantity}</span>
+                  <div>
+                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                      +
+                    </button>
+                  </div>
+                  </div>
+                </td>
+                {/* <td>
+                  ₹{( item.price) * item.quantity}
+                </td> */}
+                <td >
+                  <button onClick={() => removeItem(item.id)}>
+                    REMOVE
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className='price-details'>
+        <h2>PRICE DETAILS</h2>
+        <div >
+          <span>Total Amount</span>
+          <span>₹{calculateTotal().toLocaleString()}</span>
         </div>
         <button
           className="checkout-button"
           onClick={handleCheckout}
           disabled={cartItems.length === 0}
         >
-          Checkout
+          CHECK OUT
         </button>
       </div>
+     </div>
 
       {showConfirmation && (
-        <div className="confirmation-popup">
-          <p>Order placed successfully!</p>
+        <div className='popup'>
+          <div>
+            <h3>Order Placed Successfully!</h3>
+            <p>Your order has been confirmed. You'll receive an email shortly.</p>
+          </div>
         </div>
       )}
     </div>
   );
 };
-

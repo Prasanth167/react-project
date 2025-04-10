@@ -30,9 +30,9 @@ export const LoginComponent = () => {
     <div className="login-container">
     <form onSubmit={handleLogin}>
       <h2>Login</h2>
-      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-      <button type="submit">Login</button>
+     <div> <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required /></div>
+    <div>  <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required /></div>
+     <div><button type="submit" >Login</button></div> 
     </form>
   </div>
   )

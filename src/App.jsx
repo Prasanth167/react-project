@@ -7,14 +7,14 @@ import { HeaderComponent } from './components/HeaderComponent/HeaderComponent'
 
 
 const PrivateRoute = ({ children }) => {
-  return localStorage.getItem('token') ? children : <Navigate to="/" />
+  return localStorage.getItem('token') ? <><HeaderComponent />{children}</>: <Navigate to="/" />
 }
 
 function App() {
+  const isLoggedIn = !!localStorage.getItem('token')
   return (
     <>
       <BrowserRouter>
-      <HeaderComponent />
       <Routes>
         <Route path="/" element={<LoginComponent />} />
         <Route path="/home" element={<PrivateRoute><HomeComponent /></PrivateRoute>} />

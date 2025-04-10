@@ -1,36 +1,28 @@
 import React from 'react'
 import './HeaderComponent.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaHome, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa'
-export const HeaderComponent = () => {
-
-
+export const HeaderComponent = ({ cartItemCount = 0 }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/'); 
+  };
   return (
     <>
-  <header className="ecommerce-header">
+  <header className="header">
       <div className="header-container">
-        <Link to="/" className="logo">
+        <Link to="/home" className="logo">
           Shopping
         </Link>
-        
-        <nav className="nav-links">
-          <Link to="/" className="nav-link">
-            {/* <FaHome className="nav-icon" /> */}
+        <nav className="nav">
+          <Link to="/home" className="nav-link">
             <span>Home</span>
           </Link>
-          
-          <Link to="/cart" className="nav-link cart-link">
-            {/* <FaShoppingCart className="nav-icon" /> */}
-            {/* <span>Cart</span>
-            {cartItemCount > 0 && (
-              <span className="cart-badge">{cartItemCount}</span>
-            )} */}
-            <span>cart</span>
+          <Link to="/cart" className="nav-link">
+            <span>Cart</span>
           </Link>
-          
-          <button  className="nav-link logout-btn">
-            {/* <FaSignOutAlt className="nav-icon" /> */}
-            
+          <button className="logout-button" onClick={handleLogout}>
             <span>Logout</span>
           </button>
         </nav>
