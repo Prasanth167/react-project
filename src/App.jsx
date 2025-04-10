@@ -16,7 +16,7 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginComponent />} />
+        <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> :  <LoginComponent />} />
         <Route path="/home" element={<PrivateRoute><HomeComponent /></PrivateRoute>} />
         <Route path="/product/:id" element={<PrivateRoute><ProductDetailsComponent /></PrivateRoute>} />
         <Route path="/cart" element={<PrivateRoute><CartComponent /></PrivateRoute>} />

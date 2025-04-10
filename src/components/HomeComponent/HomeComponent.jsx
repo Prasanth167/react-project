@@ -40,7 +40,7 @@ export const HomeComponent = () => {
       <div className="filter">
         <p>Filter By Caterogy</p>
         <select value={selectedCategory} onChange={handleSelectChange}>
-          <option disabled="true" value="">Select Category</option>
+          <option disabled={true} value="">Select Category</option>
           {
             categories.map((category)=>(
               <option  key={category} value={category}>{category}</option>

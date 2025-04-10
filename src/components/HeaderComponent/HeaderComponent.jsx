@@ -1,11 +1,10 @@
 import React from 'react'
 import './HeaderComponent.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaHome, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa'
-export const HeaderComponent = ({ cartItemCount = 0 }) => {
+export const HeaderComponent = () => {
   const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+  const handleLogout = async() => {
+    await localStorage.removeItem('token');
     navigate('/'); 
   };
   return (
